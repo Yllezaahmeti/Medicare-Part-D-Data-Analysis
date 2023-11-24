@@ -4,6 +4,8 @@
 ## Description
 
 This notebook analyzes the [Medicare Part D dataset](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Part-D-Prescriber.html) to provide insights into prescription patterns, costs, and beneficiary information at the US state level. The analysis covers various aspects, including the correlation between prescribers and total claims, top prescribed drugs, and cost analysis.
+You can access to the dataset dictionary in [HERE](dataset-dictionary.pdf).
+
 
 ## Key User Groups
 - Data analysts
@@ -63,3 +65,5 @@ In the Jupyter Notebook dashboard, find and click on the name of the notebook fi
 
 - Run the Notebook:
 Inside the notebook, you can run individual cells by selecting them and pressing Shift + Enter or use the "Run" button in the toolbar.  
+
+![Sample](prescriber_prescription_correlation.png)
