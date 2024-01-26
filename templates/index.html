@@ -15,6 +15,7 @@
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="Search for a drug...">
         <button id="searchButton">Search</button>
+        <button id="backToAllButton">Back to All</button> <!-- New Button for Back to All -->
     </div>
     <div id="chart"></div>
 
@@ -102,11 +103,15 @@
             const drug = document.getElementById('searchInput').value;
             fetchData(drug);
         });
+
+        // Event listener for the "Back to All" button
+        document.getElementById('backToAllButton').addEventListener('click', () => {
+            document.getElementById('searchInput').value = ''; // Clear search input
+            fetchData(); // Fetch and display initial data
+        });
     
         // Fetch and display initial data sorted
         fetchData();
     </script>
-    
-    
 </body>
 </html>
