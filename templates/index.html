@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Prescription Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chart { width: 100%; height: 500px; }
+        .search-box { margin-bottom: 20px; }
+    </style>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search for a drug...">
+        <button id="searchButton">Search</button>
+    </div>
+    <div id="chart"></div>
+
+    <script>
+        // Function to draw the bar chart
+        function drawChart(data) {
+            // Sort the data based on the valueQuantity
+            data.sort((a, b) => d3.ascending(a.resource.valueQuantity.value, b.resource.valueQuantity.value));
+    
+            // Select the chart element and set dimensions
+            const chart = d3.select('#chart');
+            chart.selectAll('*').remove(); // Clear previous chart
+            const margin = {top: 20, right: 20, bottom: 200, left: 60},
+                  width = 1058 - margin.left - margin.right,
+                  height = 590 - margin.top - margin.bottom;
+    
+            // Create SVG container
+            const svg = chart.append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+              .append('g')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    
+            // Set up scales
+            const x = d3.scaleBand()
+                .rangeRound([0, width])
+                .padding(0.1)
+                .domain(data.map(d => d.resource.code.coding[0].display));
+    
+            const y = d3.scaleLinear()
+                .rangeRound([height, 0])
+                .domain([0, d3.max(data, d => d.resource.valueQuantity.value)]);
+    
+            // Append x-axis and rotate labels for better readability
+            const xAxis = svg.append('g')
+                .attr('transform', `translate(0, ${height})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                  .style("text-anchor", "end")
+                  .attr("dx", "-.8em")
+                  .attr("dy", ".15em")
+                  .attr("transform", "rotate(-65)");
+    
+            // Append y-axis
+            const yAxis = svg.append('g')
+                .call(d3.axisLeft(y).ticks(10));
+    
+            // Append bars
+            svg.selectAll('.bar')
+                .data(data)
+                .enter().append('rect')
+                  .attr('class', 'bar')
+                  .attr('x', d => x(d.resource.code.coding[0].display))
+                  .attr('y', d => y(d.resource.valueQuantity.value))
+                  .attr('width', x.bandwidth())
+                  .attr('height', d => height - y(d.resource.valueQuantity.value))
+                  .attr('fill', '#69b3a2');
+    
+            // Add the x-axis label
+            svg.append("text")             
+                .attr("transform", `translate(${width / 2}, ${height + margin.top + 100})`)
+                .style("text-anchor", "middle")
+                .text("Drug Types");
+    
+            // Add the y-axis label
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Percentage");  
+        }
+    
+        // Function to fetch data and update the chart
+        function fetchData(drug = '') {
+            fetch(`/data?drug=${drug}`)
+                .then(response => response.json())
+                .then(data => drawChart(data))
+                .catch(error => console.error('Error:', error));
+        }
+    
+        // Event listener for the search button
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const drug = document.getElementById('searchInput').value;
+            fetchData(drug);
+        });
+    
+        // Fetch and display initial data sorted
+        fetchData();
+    </script>
+    
+    
+</body>
+</html>

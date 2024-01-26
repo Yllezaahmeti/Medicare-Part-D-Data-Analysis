@@ -1,69 +1,79 @@
 # Medicare-Part-D-Data-Analysis
 
+# Drug Prescription Dashboard
 
-## Description
-
-This notebook analyzes the [Medicare Part D dataset](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Part-D-Prescriber.html) to provide insights into prescription patterns, costs, and beneficiary information at the US state level. The analysis covers various aspects, including the correlation between prescribers and total claims, top prescribed drugs, and cost analysis.
-You can access to the dataset dictionary in [HERE](dataset-dictionary.pdf).
-
+## Overview
+The Drug Prescription Dashboard is a sophisticated data filtering tool designed to analyze the most prescribed drugs in US hospitals. Its primary aim is to aid policy makers, healthcare professionals, data analysts, and researchers in the pharmaceutical industry in understanding prescription patterns, identifying top prescribed drugs, and exploring their associated costs and claims.
 
 ## Key User Groups
-- Data analysts
-- Healthcare professionals
-- Researchers in the pharmaceutical industry
-- Policy makers in the healthcare sector
+- **Data Analysts**: For in-depth analysis of prescription data and trends.
+- **Healthcare Professionals**: To understand drug usage patterns and support clinical decisions.
+- **Researchers in the Pharmaceutical Industry**: For researching drug popularity and usage.
+- **Policy Makers in the Healthcare Sector**: To inform decisions on drug subsidy and healthcare policies.
 
 ## User Objectives
-- Understand prescription patterns in Medicare Part D at the state level.
-- Identify top prescribed drugs and their associated costs.
-- Explore the correlation between prescribers and total claims.
-- Gain insights into beneficiary counts and prescription costs by state.
+- **Understand Prescription Patterns**: Analyze Medicare Part D prescription patterns at the state level.
+- **Identify Top Prescribed Drugs**: Discover the most commonly prescribed drugs and analyze their costs.
+- **Explore Correlations**: Investigate the relationship between prescribers, total claims, and drug usage.
 
-## Visualization
-The notebook generates several visualizations, including:
+## Features
+- **Interactive Visualizations**: Heatmaps and bar charts for easy interpretation of data.
+- **Search Functionality**: Allows users to look up specific drugs and view detailed data.
+- **Dockerization**: Ensures easy deployment and environment consistency.
+- **GitHub Codespaces Compatibility**: Facilitates development and deployment directly via GitHub.
+- **RESTful API Integration**: Supports both POST and GET methods for efficient data handling.
+- **FHIR Data Format**: Utilizes FHIR bundle format for medical data representation.
 
-- #### Top 10 Total Prescribers by State:
-Bar chart showing the top 10 states with the highest total prescribers.
+## Installation and Setup
+Ensure Docker is installed on your system before proceeding.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Yllezaahmeti/Medicare-Part-D-Data-Analysis
+   ```
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd Medicare-Part-D-Data-Analysis
+   ```
+3. **Build the Docker Image**:
+   ```bash
+   docker build -t drug-prescription-dashboard .
+   ```
+4. **Run the Docker Container**:
+   ```bash
+   docker run -p 5000:5000 drug-prescription-dashboard
+   ```
 
-- #### Top Prescribed Drug by State:
-Bar chart displaying the top prescribed drug in each state.
+## Usage
+1. **Accessing the Dashboard**: Navigate to `http://localhost:5000` in your browser.
+2. **Searching for Drugs**: Use the search box to find data on specific drugs.
+3. **Interacting with Visualizations**: Click and hover over the charts for more details.
 
-- #### Correlation between Prescribers and Total Claims by State:
-Scatter plot illustrating the correlation between the total number of prescribers and total claims by state.
+## Data Structure
+The FHIR bundle JSON data is structured as follows:
+```json
+{
+    "resourceType": "Bundle",
+    "type": "collection",
+    "entry": [
+        {
+            // Data Entries
+        }
+    ]
+}
+```
+*Data included in `static/data/fhir_bundle.json`.*
 
-- #### Top Costly Drugs by State:
-Bar chart showcasing the top costly drugs in each state.
+## Contributing
+Interested in contributing? Here's how you can help:
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -am 'Add some YourFeature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Create a new Pull Request.
 
-- #### Top Total Beneficiaries by State:
-Bar chart presenting the top states with the highest number of beneficiaries.
-Each visualization is saved as an image for easy reference.
+## License
+This project is released under the [MIT License](LICENSE).
 
-
-## Requirements
-
-    Python 3.x
-    pandas
-    matplotlib
-    seaborn
-    notebook
-
-## How to Run
-- Ensure you have Python installed on your system.
-- Install the required packages: pip install pandas matplotlib seaborn notebook.
-- Download the project and Navigate to the Notebook's Directory.
-- Launch Jupyter Notebook:
-  - Run the following command to start the Jupyter Notebook server:
-
-    ```bash
-
-    jupyter notebook
-    ```
-    This will open a new tab in your web browser showing the Jupyter Notebook dashboard.
-
-- Access the Notebook:
-In the Jupyter Notebook dashboard, find and click on the name of the notebook file (e.g., main.ipynb).
-
-- Run the Notebook:
-Inside the notebook, you can run individual cells by selecting them and pressing Shift + Enter or use the "Run" button in the toolbar.  
-
-![Sample](prescriber_prescription_correlation.png)
+## Contact
+- **Name**: [Ylleza.ahmeti@stud.th-deg.de](mailto:Ylleza.ahmeti@stud.th-deg.de)
+- **Project Link**: [https://github.com/Yllezaahmeti/Medicare-Part-D-Data-Analysis](https://github.com/Yllezaahmeti/Medicare-Part-D-Data-Analysis)
